@@ -28,7 +28,7 @@ const Product_women = () => {
     <div className="Product">
       <div className='p-3 bg-slate-100   text-[22px]  grid grid-cols-3'>
         <div>
-          <h3 className='font-bold  text-left '>Affordable Thrift Store</h3>
+          <h3 className='font-bold  text-left '>Affordable Thrift Store123</h3>
         </div>
         <div>
           <h3 className='font-bold  text-[25px] tracking-widest text-center'>Women's wear</h3>

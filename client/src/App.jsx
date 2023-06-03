@@ -4,7 +4,7 @@ import About from "./components/Admin/About";
 import AdminWrapper from "./components/Admin/AdminWrapper";
 import Settings from "./components/Admin/Settings";
 import CheckoutPage from "./components/Checkout/CheckoutPage";
-import Login from "./components/Login";
+import LoginPage from "./components/LoginPage";
 import Products from "./components/Products";
 import Register from "./components/Register";
 import Seller from "./components/Seller";
@@ -12,6 +12,7 @@ import ItemsAddPage from "./components/Sellers/ItemsAddPage";
 import Home from "./pages/Home";
 import AdminProducts from "./components/Admin/AdminPages/Products/AdminProducts";
 import UserPage from "./components/Admin/AdminPages/Users/UserPage";
+import CartPage from "./components/CartPage/CartPage";
 
 
 const App = () => {
@@ -26,12 +27,9 @@ const App = () => {
     <Routes>
       <Route path="" element={<Home />} />
       <Route path="product" element={<Products />} />
-      <Route path="product/checkout" element={<CheckoutPage />} />
-      {/* <Route path="product_women" element={<Product />} />
-      <Route path="product_men" element={<Product />} />
-      <Route path="product_kids" element={<Product />} /> */}
+      <Route path="product/checkout" element={<CartPage />} />
       <Route path="register" element={<Register />} />
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<LoginPage />} />
       <Route path="seller" element={<Seller />} />
       <Route path="seller/add" element={<ItemsAddPage />} />
       <Route path="settings" element={<Settings />} />

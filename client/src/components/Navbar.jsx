@@ -1,6 +1,7 @@
 import { AddShoppingCartOutlined, ShoppingCartOutlined } from '@mui/icons-material'
 import { Badge } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 const Container = styled.div`
@@ -17,7 +18,7 @@ const Wrapper = styled.span`
 const Language = styled.span`
     font-size:20px;
     cursor: pointer;
-    text-align:center
+    text-align:center;
 `
 const SearchContainer = styled.div`
     border:1px soild black;
@@ -49,6 +50,7 @@ const Menuitem = styled.div`
     cursor: pointer;
     margin-left:20px;
 `
+console.log("localStorage.getItem", localStorage.getItem("username"))
 const Navbar = () => {
     return (
         <Container className='drop-shadow-lg z-[10] shadow-sm'>
@@ -61,11 +63,13 @@ const Navbar = () => {
                 </Center>
                 <Right>
                     <div className='flex gap-4'>
+                        <Badge badgeContent={4} color="primary">
+                            <ShoppingCartOutlined />
+                        </Badge>
                         {
                             localStorage.getItem("username") ?
                                 <div>
-                                    Welcome ||
-                                    <Link to=" seller">Sell item</Link>
+                                    {localStorage.getItem("username")}
                                 </div>
                                 :
                                 <>
@@ -74,12 +78,6 @@ const Navbar = () => {
                                     >  Login</button>
                                 </>
                         }
-
-
-
-                        <Badge badgeContent={4} color="primary">
-                            <ShoppingCartOutlined />
-                        </Badge>
                     </div>
                 </Right>
             </Wrapper>

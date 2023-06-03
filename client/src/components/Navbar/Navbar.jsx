@@ -1,9 +1,11 @@
-import { AddShoppingCartOutlined, ShoppingCartOutlined } from '@mui/icons-material'
+import { ShoppingCartOutlined } from '@mui/icons-material'
 import { Badge } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import NavbarAvatar from './NavbarAvatar'
+
 const Container = styled.div`
     height:50px;
     background-color:white;
@@ -14,17 +16,6 @@ const Wrapper = styled.span`
     display:flex; //horizontal garna
     justify-content:space-between;///lefcenterright yesri join bhayera aucha
     font-weight:bold;//bold garna
-`
-const Language = styled.span`
-    font-size:20px;
-    cursor: pointer;
-    text-align:center;
-`
-const SearchContainer = styled.div`
-    border:1px soild black;
-    display:flex;
-    text-align:center;
-    margin-left:10px;//nabeh box tasera aucha EN sita
 `
 const Left = styled.div`
     flex:1;
@@ -45,13 +36,9 @@ const Right = styled.div`
     align-items:center;
     justify-content:flex-end;
 `
-const Menuitem = styled.div`
-    font-size:20px;
-    cursor: pointer;
-    margin-left:20px;
-`
-console.log("localStorage.getItem", localStorage.getItem("username"))
 const Navbar = () => {
+    const cart = useSelector(state => state.cart)
+    console.log("cart", cart.products.length)
     return (
         <Container className='drop-shadow-lg z-[10] shadow-sm'>
             <Wrapper>
@@ -62,15 +49,16 @@ const Navbar = () => {
 
                 </Center>
                 <Right>
-                    <div className='flex gap-4'>
-                        <Badge badgeContent={4} color="primary">
-                            <ShoppingCartOutlined />
-                        </Badge>
+                    <div className='flex gap-4 items-center'>
+
+                        <Link to="product/checkout">
+                            <Badge badgeContent={cart.products.length} color="primary" className='cursor-pointer'>
+                                <ShoppingCartOutlined />
+                            </Badge>
+                        </Link>
                         {
                             localStorage.getItem("username") ?
-                                <div>
-                                    {localStorage.getItem("username")}
-                                </div>
+                                <NavbarAvatar />
                                 :
                                 <>
                                     <Link to="register">Signup</Link><button

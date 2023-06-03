@@ -1,13 +1,9 @@
 //import { Category } from '@mui/icons-material'
 import React from 'react'
-import Announcement from '../components/Announcement'
-import DemoSlider from '../components/DemoSlider'
-import Navbar from '../components/Navbar'
-import Category from '../components/Category'
-import Footer from '../components/Footer'
-import Product from '../components/Product_women'
-import Register from '../components/Register'
 import Annoucement2 from '../components/Annoucement2'
+import Announcement from '../components/Announcement'
+import Category from '../components/Category'
+import DemoSlider from '../components/DemoSlider'
 
 
 const Home = () => {
@@ -19,12 +15,10 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
       <DemoSlider />
       <Announcement />
       <Category />
       <Annoucement2 />
-      <Footer />
 
       <div
         data-te-modal-init
@@ -82,13 +76,13 @@ const Home = () => {
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" placeholder="*******" />
               </div>
               <div class=" text-center items-center justify-center shadow appearance-none border rounded w-[100px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-              <button type='submit'>Login</button>
+                <button type='submit'>Login</button>
               </div>
             </form>
-            </div>
           </div>
         </div>
-     
+      </div>
+
     </>
   )
 }

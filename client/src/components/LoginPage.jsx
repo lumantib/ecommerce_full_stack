@@ -16,7 +16,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (data) => {
     setIsLoading(true);
-    publicRequest.post('/api/auth/login', data)
+    publicRequest.post('/auth/login', data)
       .then((response) => {
         if (response.status === 200) {
           // Successful login, handle the response as needed

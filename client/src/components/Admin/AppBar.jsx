@@ -18,9 +18,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { useAppStore } from '../../appStore';
 
 const AppBar = styled(MuiAppBar, {
-  })(({ theme}) => ({
-    zIndex: theme.zIndex.drawer + 1,
-  }));
+})(({ theme }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+}));
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -65,8 +65,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-const updateOpen= useAppStore((state)=> state.updateOpen);
-const dopen= useAppStore((state)=> state.dopen);
+  const updateOpen = useAppStore((state) => state.updateOpen);
+  const dopen = useAppStore((state) => state.dopen);
 
 
   const isMenuOpen = Boolean(anchorEl);
@@ -173,43 +173,12 @@ const dopen= useAppStore((state)=> state.dopen);
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
-            onClick={()=>updateOpen(!dopen)}
+            onClick={() => updateOpen(!dopen)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               edge="end"

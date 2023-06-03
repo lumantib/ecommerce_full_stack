@@ -13,6 +13,9 @@ import Home from "./pages/Home";
 import AdminProducts from "./components/Admin/AdminPages/Products/AdminProducts";
 import UserPage from "./components/Admin/AdminPages/Users/UserPage";
 import CartPage from "./components/CartPage/CartPage";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer";
+import SellerProductListPage from "./components/Admin/AdminPages/Products/SellerProducts/SellerProductListPage";
 
 
 const App = () => {
@@ -25,25 +28,41 @@ const App = () => {
   return (
 
     <Routes>
-      <Route path="" element={<Home />} />
-      <Route path="product" element={<Products />} />
-      <Route path="product/checkout" element={<CartPage />} />
-      <Route path="register" element={<Register />} />
-      <Route path="login" element={<LoginPage />} />
-      <Route path="seller" element={<Seller />} />
-      <Route path="seller/add" element={<ItemsAddPage />} />
-      <Route path="settings" element={<Settings />} />
-      <Route path="about" element={<About />} />
-
+      <Route path="" element={<LayoutsWithDefaultNavbar />}>
+        <Route path="" element={<Home />} />
+        <Route path="product" element={<Products />} />
+        <Route path="product/checkout" element={<CartPage />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="seller" element={<Seller />} />
+        <Route path="seller/add" element={<ItemsAddPage />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="about" element={<About />} />
+      </Route>
       <Route path="admin" element={<LayoutsWithNavbar />}>
         <Route path="products" element={<AdminProducts />} />
         <Route path="users" element={<UserPage />} />
+      </Route>
+      <Route path="seller" element={<LayoutsWithNavbar />}>
+        <Route path="products" element={<SellerProductListPage />} />
       </Route>
 
     </Routes>
 
   )
 
+  function LayoutsWithDefaultNavbar() {
+    return (
+      <>
+        {/* Your navbar component */}
+        <Navbar />
+        {/* This Outlet is the place in which react-router will render your components that you need with the navbar */}
+        <Outlet />
+        {/* You can add a footer to get fancy in here :) */}
+        <Footer />
+      </>
+    );
+  }
   function LayoutsWithNavbar() {
     return (
       <>

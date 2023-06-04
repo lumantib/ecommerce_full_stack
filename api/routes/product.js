@@ -75,13 +75,24 @@ router.get("/find/:id", async (req, res) => {
     }
 });
 
-//get all products
+//get all products of seller
 router.get("/seller", verifyToken, async (req, res) => {
 
     try {
         const userId = req.user.id;
 
         const product = await Product.find({ seller: userId }).populate("seller");
+        res.status(200).json(product);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//get all products which is verified
+router.get("/isVerified", async (req, res) => {
+
+    try {
+        const product = await Product.find({ isVerified: true }).populate("seller");
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);

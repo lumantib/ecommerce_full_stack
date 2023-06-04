@@ -3,6 +3,6 @@ export const columns = [
     { field: 'Image', headerName: 'Image', minWidth: 150 },
     { field: 'name', headerName: 'Status', minWidth: 50 },
     { field: 'price', headerName: 'Price', minWidth: 150 },
-    { field: 'verified', headerName: 'Verified', minWidth: 150 },
+    { field: 'isVerified', headerName: 'Verified', minWidth: 150 },
     { field: 'description', headerName: 'Description', minWidth: 150, flex: 1 }
 ];

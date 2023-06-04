@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema(
     {
-        user: {
+        user_id: {
             type: mongoose.Schema.ObjectId,
             ref: 'User'
         },
@@ -10,7 +10,11 @@ const OrderSchema = new mongoose.Schema(
             type: mongoose.Schema.ObjectId,
             ref: 'Product'
 
-        }]
+        }],
+        payement_completed: {
+            type: Boolean,
+            default: false,
+        }
     },
     { timestamps: true }
 );

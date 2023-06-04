@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useForm } from "react-hook-form";
 import publicRequest from '../../../../../requests/requestMethos';
+import MenuItem from '@mui/material/MenuItem';
 import ConfirmationButtonsContainer from '../../../../UI/MUI/Modals/ConfirmationButtons/ConfirmationButtonsContainer';
 
 
@@ -12,6 +13,7 @@ const AdminViewAllProductsFrom = (props) => {
     // react hook form setup
     const { register, handleSubmit, watch, reset, formState: { errors }, unregister } = useForm({
         defaultValues: {
+            product_id: props?.selectedData?._id
         }
     });
     console.log("props.setResponseMessage", props.setResponseMessage)
@@ -19,7 +21,7 @@ const AdminViewAllProductsFrom = (props) => {
     const onSubmit = data => {
         console.log("submit data", data)
         props.setIsLoading(true)
-        publicRequest.post('/products', data)
+        publicRequest.patch('/products/verify', data)
             .then(res => {
                 console.log(res)
                 props.setResponseMessage("Data has been added")
@@ -41,26 +43,18 @@ const AdminViewAllProductsFrom = (props) => {
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex flex-col gap-4 p-4'>
                 <TextField
-                    label="Product Name"
-                    id="outlined-size-small"
-                    size="small"
+                    select
                     fullWidth
-                    {...register("name")}
-                />
-                <TextField
-                    label="Price"
-                    id="outlined-size-small"
-                    size="small"
-                    fullWidth
-                    {...register("price")}
-                />
-                <TextField
-                    label="Description"
-                    id="outlined-size-small"
-                    size="small"
-                    fullWidth
-                    {...register("description")}
-                />
+                    defaultValue=""
+                    size='small'
+                    label="Verified"
+                    inputProps={register('isVerified', { required: 'Type Required', })}
+                    error={errors.isVerified}
+                    helperText={errors.isVerified?.message}
+                >
+                    <MenuItem value={false}>False</MenuItem>
+                    <MenuItem value={true}>True</MenuItem>
+                </TextField>
             </div>
             <ConfirmationButtonsContainer>
                 <Button color="error" className='text-gray-600' onClick={props.handleClose}>Cancel</Button>

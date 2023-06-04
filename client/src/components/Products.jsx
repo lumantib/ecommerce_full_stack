@@ -19,7 +19,7 @@ const ProductListPage = () => {
     }
     const [prouctsData, setProuctsData] = useState([]);
     useEffect(() => {
-        publicRequest.get("products")
+        publicRequest.get("products/isVerified")
             .then(res => setProuctsData(res?.data))
             .catch(err => console.log(err))
     }, []);

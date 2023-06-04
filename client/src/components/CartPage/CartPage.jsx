@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import bluejeans from './bluejeans.jpg';
 import { removeProduct } from '../../redux/cartReducer';
 import { Link } from 'react-router-dom';
+import publicRequest from '../../requests/requestMethos';
 
 const CartPage = () => {
     const calculateTotal = () => {
@@ -16,6 +17,21 @@ const CartPage = () => {
         dispatch(removeProduct({ id: item.id }))
     }
     console.log("cart.products", cart.products)
+    const product_ids = cart.products.map(product => product._id).join()
+    console.log("product_ids", product_ids)
+    const [alreadyBought, setAlreadyBought] = useState([]);
+    const handleSubmit = () => {
+        publicRequest.post("orders", { products: cart.products.map(product => product._id).join().split(",") })
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                setAlreadyBought(err.response.data.invalidProductIds)
+                console.log(err.response.data.invalidProductIds)
+            }
+            )
+    }
+
     const PaymentMethod = () => {
         return (
             <div className="bg-white p-4 shadow sm:rounded-lg">
@@ -33,7 +49,10 @@ const CartPage = () => {
                     <input type="radio" id="cash" name="paymentMethod" className="mr-2" />
                     <label htmlFor="cash" className="text-gray-700">Cash on Delivery</label>
                 </div>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">
+                <button
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded"
+                    onClick={() => handleSubmit()}
+                >
                     Place Order
                 </button>
             </div>
@@ -43,7 +62,7 @@ const CartPage = () => {
     return (
         <div className="container mx-auto py-6">
             <h1 className="text-2xl font-bold mb-4">Cart</h1>
-
+            {cart.products.some(cart_product => alreadyBought.includes(cart_product._id)) && <span className='text-red-600'>Some of these products have already been bought. Please remove it</span>}
             {cart.products.length === 0 ? (
                 <div className="bg-white p-4 shadow sm:rounded-lg">
                     <p className="text-gray-500">Your cart is empty.<Link to="">Home</Link></p>
@@ -53,22 +72,25 @@ const CartPage = () => {
                     <div className="bg-white shadow overflow-hidden sm:rounded-lg w-full sm:w-3/4">
                         <div className="flex flex-col divide-y divide-gray-200">
                             {cart.products.map((item) => (
-                                <div key={item.id} className="flex items-center px-4 py-3">
+                                <div key={item.id} className={`flex items-center px-4 py-3 ${alreadyBought.includes(item._id) ? 'bg-gray-200' : ''}`}>
                                     <div className="w-16 h-16 flex-shrink-0">
                                         <img src={bluejeans} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1 ml-4">
                                         <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
                                         <p className="text-gray-500">${item.price}</p>
+                                        {item.buyer && <p className="text-red-500">Already bought</p>}
                                     </div>
-                                    <div>
-                                        <button
-                                            className="text-red-500 hover:text-red-600 ml-2"
-                                            onClick={() => handleRemoveFromCart(item)}
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
+                                    {!item.buyer && (
+                                        <div>
+                                            <button
+                                                className="text-red-500 hover:text-red-600 ml-2"
+                                                onClick={() => handleRemoveFromCart(item)}
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>

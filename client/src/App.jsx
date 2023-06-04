@@ -14,6 +14,7 @@ import Register from "./components/Register";
 import Seller from "./components/Seller";
 import ItemsAddPage from "./components/Sellers/ItemsAddPage";
 import Home from "./pages/Home";
+import AdminViewOrderListPage from "./components/Admin/AdminPages/Products/AdminViewOrder/AdminViewOrderListPage";
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
       <Route path="dashboard" element={<LayoutsWithNavbar />}>
         <Route path="products/all" element={<AdminViewAllProductsListPage />} />
         <Route path="products/sell" element={<SellerProductListPage />} />
+        <Route path="products/orders" element={<AdminViewOrderListPage />} />
         <Route path="users" element={<UserPage />} />
       </Route>
 

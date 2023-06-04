@@ -1,6 +1,6 @@
 // import SimpleSnackbar from '@/components/UI/Snackbar/SimpleSnackbar'
 import React, { useEffect, useState } from 'react';
-import SellerProductFrom from './SellerProductFrom';
+import AdminOrderRespondFrom from './AdminOrderRespondFrom';
 import { columns } from './columns';
 import identifiers from './identifiers';
 import DataListAdmin from '../../../../UI/DataTable/DataListAdmin';
@@ -10,7 +10,7 @@ import ModalContainer from '../../../../UI/MUI/Modals/ModalContainer';
 import MuiModal from '../../../../UI/MUI/Modals/MuiModal';
 import SimpleSnackbar from '../../../../UI/Snackbar/SimpleSnackbar';
 
-const SellerProductListPage = () => {
+const AdminViewOrderListPage = () => {
     useEffect(() => {
         fetchData()
     }, []);
@@ -21,8 +21,13 @@ const SellerProductListPage = () => {
     // Api Calls
     const [data, setData] = useState([]);
     const fetchData = () => {
-        publicRequest.get('/products/seller')
+        publicRequest.get('/orders')
             .then(res => {
+                res?.data?.forEach(order => {
+                    delete order.buyer._id
+                    Object.assign(order, order.buyer)
+                });
+                console.log(res.data)
                 setData(res?.data)
             })
             .catch(err => console.log(err))
@@ -82,7 +87,7 @@ const SellerProductListPage = () => {
                 {
                     modalMode === identifiers.add.modal_mode && (
                         <ModalContainer title={identifiers.add.title} handleClose={handleClose} identifiers={identifiers} modalMode={modalMode}>
-                            <SellerProductFrom
+                            <AdminOrderRespondFrom
                                 {...modalProps}
                             />
                         </ModalContainer>
@@ -91,7 +96,7 @@ const SellerProductListPage = () => {
                 {
                     modalMode === identifiers.edit.modal_mode && (
                         <ModalContainer title={identifiers.edit.title} handleClose={handleClose} identifiers={identifiers} modalMode={modalMode}>
-                            <SellerProductFrom
+                            <AdminOrderRespondFrom
                                 {...modalProps}
                                 selectedData={data.find((data => data._id == selectedRowItemId))}
                             />
@@ -117,4 +122,4 @@ const SellerProductListPage = () => {
     )
 }
 
-export default SellerProductListPage
+export default AdminViewOrderListPage

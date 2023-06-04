@@ -23,7 +23,6 @@ const AdminViewAllProductsListPage = () => {
     const fetchData = () => {
         publicRequest.get('/products')
             .then(res => {
-                console.log(res?.data)
                 setData(res?.data)
             })
             .catch(err => console.log(err))
@@ -76,7 +75,6 @@ const AdminViewAllProductsListPage = () => {
         fetchData: fetchData,
         setResponseMessage: setResponseMessage
     }
-    console.log("responseMessage", responseMessage)
 
     return (
         <>

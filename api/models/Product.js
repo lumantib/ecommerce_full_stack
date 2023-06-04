@@ -30,6 +30,10 @@ const ProductSchema = new mongoose.Schema(
             ref: 'User',
             required: true
         },
+        payement_completed: {
+            type: Boolean,
+            default: false,
+        }
 
     },
     { timestamps: true }

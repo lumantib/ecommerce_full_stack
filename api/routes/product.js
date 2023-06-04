@@ -92,7 +92,7 @@ router.get("/seller", verifyToken, async (req, res) => {
 router.get("/isVerified", async (req, res) => {
 
     try {
-        const product = await Product.find({ isVerified: true }).populate("seller");
+        const product = await Product.find({ isVerified: true, buyer: { $exists: false } }).populate("seller");
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);
@@ -103,7 +103,7 @@ router.get("/isVerified", async (req, res) => {
 router.get("/", async (req, res) => {
 
     try {
-        const product = await Product.find().populate("seller");
+        const product = await Product.find().populate("seller").populate("buyer");
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);

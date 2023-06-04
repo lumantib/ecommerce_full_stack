@@ -8,7 +8,7 @@ import publicRequest from '../../../../../requests/requestMethos';
 import ConfirmationButtonsContainer from '../../../../UI/MUI/Modals/ConfirmationButtons/ConfirmationButtonsContainer';
 
 
-const SellerProductFrom = (props) => {
+const AdminViewAllProductsFrom = (props) => {
     // react hook form setup
     const { register, handleSubmit, watch, reset, formState: { errors }, unregister } = useForm({
         defaultValues: {
@@ -78,4 +78,4 @@ const SellerProductFrom = (props) => {
     )
 }
 
-export default SellerProductFrom
+export default AdminViewAllProductsFrom

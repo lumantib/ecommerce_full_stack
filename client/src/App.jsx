@@ -1,30 +1,22 @@
-import { useEffect } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
 import About from "./components/Admin/About";
+import AdminViewAllProductsListPage from "./components/Admin/AdminPages/Products/AdminViewAllProducts/AdminViewAllProductsListPage";
+import SellerProductListPage from "./components/Admin/AdminPages/Products/SellerProducts/SellerProductListPage";
+import UserPage from "./components/Admin/AdminPages/Users/UserPage";
 import AdminWrapper from "./components/Admin/AdminWrapper";
 import Settings from "./components/Admin/Settings";
-import CheckoutPage from "./components/Checkout/CheckoutPage";
+import CartPage from "./components/CartPage/CartPage";
+import Footer from "./components/Footer";
 import LoginPage from "./components/LoginPage";
+import Navbar from "./components/Navbar/Navbar";
 import Products from "./components/Products";
 import Register from "./components/Register";
 import Seller from "./components/Seller";
 import ItemsAddPage from "./components/Sellers/ItemsAddPage";
 import Home from "./pages/Home";
-import AdminProducts from "./components/Admin/AdminPages/Products/AdminProducts";
-import UserPage from "./components/Admin/AdminPages/Users/UserPage";
-import CartPage from "./components/CartPage/CartPage";
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer";
-import SellerProductListPage from "./components/Admin/AdminPages/Products/SellerProducts/SellerProductListPage";
 
 
 const App = () => {
-  useEffect(() => {
-    const importTE = async () => {
-      await import("tw-elements");
-    };
-    importTE();
-  }, []);
   return (
 
     <Routes>
@@ -39,12 +31,10 @@ const App = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="about" element={<About />} />
       </Route>
-      <Route path="admin" element={<LayoutsWithNavbar />}>
-        <Route path="products" element={<AdminProducts />} />
+      <Route path="dashboard" element={<LayoutsWithNavbar />}>
+        <Route path="products/all" element={<AdminViewAllProductsListPage />} />
+        <Route path="products/sell" element={<SellerProductListPage />} />
         <Route path="users" element={<UserPage />} />
-      </Route>
-      <Route path="seller" element={<LayoutsWithNavbar />}>
-        <Route path="products" element={<SellerProductListPage />} />
       </Route>
 
     </Routes>

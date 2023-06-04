@@ -21,14 +21,14 @@ const CartPage = () => {
             <div className="bg-white p-4 shadow sm:rounded-lg">
                 <h2 className="text-lg font-semibold mb-2">Payment Method</h2>
                 <p className="text-gray-500">Choose your preferred payment method:</p>
-                <div className="flex items-center mt-4">
+                {/* <div className="flex items-center mt-4">
                     <input type="radio" id="creditCard" name="paymentMethod" className="mr-2" />
                     <label htmlFor="creditCard" className="text-gray-700">Credit Card</label>
                 </div>
                 <div className="flex items-center mt-2">
                     <input type="radio" id="paypal" name="paymentMethod" className="mr-2" />
                     <label htmlFor="paypal" className="text-gray-700">PayPal</label>
-                </div>
+                </div> */}
                 <div className="flex items-center mt-2">
                     <input type="radio" id="cash" name="paymentMethod" className="mr-2" />
                     <label htmlFor="cash" className="text-gray-700">Cash on Delivery</label>
@@ -55,10 +55,10 @@ const CartPage = () => {
                             {cart.products.map((item) => (
                                 <div key={item.id} className="flex items-center px-4 py-3">
                                     <div className="w-16 h-16 flex-shrink-0">
-                                        <img src={bluejeans} alt={item.product_name} className="w-full h-full object-cover" />
+                                        <img src={bluejeans} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1 ml-4">
-                                        <h3 className="text-lg font-medium text-gray-900">{item.product_name}</h3>
+                                        <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
                                         <p className="text-gray-500">${item.price}</p>
                                     </div>
                                     <div>

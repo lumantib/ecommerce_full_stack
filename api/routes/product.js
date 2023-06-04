@@ -19,6 +19,25 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 //update
+router.patch("/verify", verifyTokenAndAdmin, async (req, res) => {
+    try {
+        const product_id = req?.body?.product_id
+        const isVerified = req.body.isVerified
+        const updatedProduct = await Product.findByIdAndUpdate(
+            product_id,
+            {
+                $set: { isVerified: isVerified }
+            },
+            { new: true }
+        );
+        res.status(200).json(updatedProduct);
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err);
+    }
+});
+
+//update
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(

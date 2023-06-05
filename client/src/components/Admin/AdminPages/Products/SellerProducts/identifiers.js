@@ -1,12 +1,12 @@
 const identifiers = {
-    title: "Products",
+    title: "Seller Products",
     edit: {
         title: "Update Product",
         button_label: "Update Statuss",
         modal_mode: "edit"
     },
     add: {
-        title: "Add New Product",
+        title: "Sell New Product",
         button_label: "Add",
         modal_mode: "add"
     },

@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import bluejeans from './bluejeans.jpg';
 import { removeProduct } from '../../redux/cartReducer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import publicRequest from '../../requests/requestMethos';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
+
 
 const CartPage = () => {
+    const navigate = useNavigate()
     const calculateTotal = () => {
         const total = cart.products.reduce((acc, item) => acc + item.price, 0);
         return total.toFixed(2);
@@ -16,48 +22,42 @@ const CartPage = () => {
     const handleRemoveFromCart = (item) => {
         dispatch(removeProduct({ id: item.id }))
     }
-    console.log("cart.products", cart.products)
     const product_ids = cart.products.map(product => product._id).join()
-    console.log("product_ids", product_ids)
     const [alreadyBought, setAlreadyBought] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const handleSubmit = () => {
+        setIsLoading(true)
+        MySwal.fire({
+            title: <p>Your order has been placed</p>,
+            didOpen: () => {
+                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                MySwal.showLoading()
+            },
+        })
         publicRequest.post("orders", { products: cart.products.map(product => product._id).join().split(",") })
-            .then(res => {
+        .then(res => {
+            Swal.close();
+
+                MySwal.fire(<p>Order has been placed</p>)
+                    .then((result) => {
+                        console.log("result", result)
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            navigate("/")
+                        }
+                    })
                 console.log(res.data)
+                setIsLoading(false)
             })
             .catch(err => {
+                Swal.close();
                 setAlreadyBought(err.response.data.invalidProductIds)
                 console.log(err.response.data.invalidProductIds)
+                setIsLoading(false)
             }
             )
     }
 
-    const PaymentMethod = () => {
-        return (
-            <div className="bg-white p-4 shadow sm:rounded-lg">
-                <h2 className="text-lg font-semibold mb-2">Payment Method</h2>
-                <p className="text-gray-500">Choose your preferred payment method:</p>
-                {/* <div className="flex items-center mt-4">
-                    <input type="radio" id="creditCard" name="paymentMethod" className="mr-2" />
-                    <label htmlFor="creditCard" className="text-gray-700">Credit Card</label>
-                </div>
-                <div className="flex items-center mt-2">
-                    <input type="radio" id="paypal" name="paymentMethod" className="mr-2" />
-                    <label htmlFor="paypal" className="text-gray-700">PayPal</label>
-                </div> */}
-                <div className="flex items-center mt-2">
-                    <input type="radio" id="cash" name="paymentMethod" className="mr-2" />
-                    <label htmlFor="cash" className="text-gray-700">Cash on Delivery</label>
-                </div>
-                <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded"
-                    onClick={() => handleSubmit()}
-                >
-                    Place Order
-                </button>
-            </div>
-        );
-    };
 
     return (
         <div className="container mx-auto py-6">
@@ -69,7 +69,7 @@ const CartPage = () => {
                 </div>
             ) : (
                 <div className="flex flex-col sm:flex-row">
-                    <div className="bg-white shadow overflow-hidden sm:rounded-lg w-full sm:w-3/4">
+                    <div className="bg-white shadow overflow-hidden sm:rounded-lg w-full ">
                         <div className="flex flex-col divide-y divide-gray-200">
                             {cart.products.map((item) => (
                                 <div key={item.id} className={`flex items-center px-4 py-3 ${alreadyBought.includes(item._id) ? 'bg-gray-200' : ''}`}>
@@ -95,15 +95,19 @@ const CartPage = () => {
                             ))}
                         </div>
                         <div className="bg-gray-100 px-4 py-3 flex justify-between">
-                            <p className="text-gray-600 font-medium">Total:</p>
-                            <p className="text-gray-900 font-semibold">Rs {calculateTotal()}</p>
+                            <p className="text-gray-600 font-medium">Total: Rs {calculateTotal()}</p>
+                            <p className="text-gray-900 font-semibold flex items-center justify-between">
+                                <button
+                                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                                    onClick={() => handleSubmit()}
+                                >
+                                    Place Order
+                                </button></p>
                         </div>
-                    </div>
-                    <div className="sm:ml-4 mt-4 sm:mt-0 sm:w-1/4">
-                        <PaymentMethod />
                     </div>
                 </div>
             )}
+
         </div>
     );
 };

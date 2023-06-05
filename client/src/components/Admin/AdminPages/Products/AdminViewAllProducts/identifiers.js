@@ -1,5 +1,5 @@
 const identifiers = {
-    title: "Products",
+    title: "View All Products",
     edit: {
         title: "Update Product",
         button_label: "Update Statuss",

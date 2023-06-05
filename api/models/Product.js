@@ -22,7 +22,7 @@ const ProductSchema = new mongoose.Schema(
         },
         isVerified: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         buyer: {
             type: mongoose.Schema.ObjectId,

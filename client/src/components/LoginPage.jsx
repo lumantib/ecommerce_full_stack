@@ -25,8 +25,11 @@ const LoginPage = () => {
           localStorage.setItem("username", result.username)
           localStorage.setItem("email", result.email)
           localStorage.setItem("isAdmin", result.isAdmin)
+          result.isAdmin ?
+            navigate('/dashboard/products/all')
+            :
+            navigate('/')
 
-          navigate('/');
         } else {
           // Error occurred during login
           const errorData = response.data;

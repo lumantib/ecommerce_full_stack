@@ -2,19 +2,44 @@
 import SendIcon from '@mui/icons-material/Send';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useForm } from "react-hook-form";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import FormLabel from '@mui/material/FormLabel';
+import * as React from 'react';
+import { useForm, Controller } from "react-hook-form";
 import publicRequest from '../../../../../requests/requestMethos';
 import ConfirmationButtonsContainer from '../../../../UI/MUI/Modals/ConfirmationButtons/ConfirmationButtonsContainer';
-
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select
+} from "@mui/material";
 
 const SellerProductFrom = (props) => {
+    React.useEffect(() => {
+        fetchTypes()
+    }, []);
+
+    // Api Calls
+    const [types, setTypes] = React.useState([]);
+    const fetchTypes = () => {
+        publicRequest.get('/type')
+            .then(res => {
+                console.log(res.data.filter(type => type.type == "Category"))
+                setTypes(res?.data)
+            })
+            .catch(err => console.log(err))
+    }
+
     // react hook form setup
-    const { register, handleSubmit, watch, reset, formState: { errors }, unregister } = useForm({
+    const { register, handleSubmit, watch, reset, formState: { errors }, unregister, control } = useForm({
         defaultValues: {
         }
     });
-    console.log("props.setResponseMessage", props.setResponseMessage)
+
     // submit data
     const onSubmit = data => {
         console.log("submit data", data)
@@ -39,7 +64,7 @@ const SellerProductFrom = (props) => {
 
     return (
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex flex-col gap-4 p-4'>
+            <div className='flex flex-col gap-4 p-4 h-60 overflow-auto'>
                 <TextField
                     label="Product Name"
                     id="outlined-size-small"
@@ -60,6 +85,68 @@ const SellerProductFrom = (props) => {
                     size="small"
                     fullWidth
                     {...register("description")}
+                />
+
+                <Controller
+                    name="categories"
+                    control={control}
+                    type="text"
+                    size="small"
+                    defaultValue={[]}
+                    render={({ field }) => (
+                        <FormControl>
+                            <InputLabel id="age" size="small">Categories</InputLabel>
+                            <Select
+                                size="small"
+                                {...field}
+                                labelId="Categories"
+                                label="Categories"
+                                multiple
+                                defaultValue={[]}
+                            >
+                                {
+                                    types?.filter(type => type.type == "Category")?.map(type => {
+                                        return (
+                                            <MenuItem key={type._id} value={type.name}>
+                                                {type.name}
+                                            </MenuItem>
+                                        )
+                                    })
+                                }
+                            </Select>
+                        </FormControl>
+                    )}
+                />
+
+                <Controller
+                    name="seasons"
+                    control={control}
+                    type="text"
+                    size="small"
+                    defaultValue={[]}
+                    render={({ field }) => (
+                        <FormControl>
+                            <InputLabel id="Seasons" size="small">Seasons</InputLabel>
+                            <Select
+                                {...field}
+                                size="small"
+                                labelId="Seasons"
+                                label="Seasons"
+                                multiple
+                                defaultValue={[]}
+                            >
+                                {
+                                    types?.filter(type => type.type == "Season")?.map(type => {
+                                        return (
+                                            <MenuItem key={type._id} value={type.name}>
+                                                {type.name}
+                                            </MenuItem>
+                                        )
+                                    })
+                                }
+                            </Select>
+                        </FormControl>
+                    )}
                 />
             </div>
             <ConfirmationButtonsContainer>

@@ -1,11 +1,11 @@
 import { ShoppingCartOutlined } from '@mui/icons-material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, removeProduct } from '../redux/cartReducer';
-import products from "./product_data";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import publicRequest from '../requests/requestMethos';
 
+import { useSearchParams } from 'react-router-dom';
 const ProductListPage = () => {
 
     const dispatch = useDispatch()
@@ -19,10 +19,19 @@ const ProductListPage = () => {
     }
     const [prouctsData, setProuctsData] = useState([]);
     useEffect(() => {
-        publicRequest.get("products/isVerified")
+        publicRequest.get(`products/isVerified?categories=${searchParams.get('category')}`)
             .then(res => setProuctsData(res?.data))
             .catch(err => console.log(err))
     }, []);
+
+
+    let [searchParams, setSearchParams] = useSearchParams();
+    console.log(searchParams.get('category')); // send
+
+
+    // const history = useHistory()
+    // history.location.pathname
+
     return (
         <div className="container mx-auto py-8">
             <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Amazing Products</h1>

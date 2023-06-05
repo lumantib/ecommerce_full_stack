@@ -88,16 +88,28 @@ router.get("/seller", verifyToken, async (req, res) => {
     }
 });
 
-//get all products which is verified
-router.get("/isVerified", async (req, res) => {
 
+// get all products which are verified and match specific categories
+router.get("/isVerified", async (req, res) => {
     try {
-        const product = await Product.find({ isVerified: true, buyer: { $exists: false } }).populate("seller");
+        const { categories } = req.query;
+        let productQuery = {
+            isVerified: true,
+            buyer: { $exists: false }
+        };
+
+        if (categories) {
+            productQuery.categories = { $in: categories };
+        }
+
+        const product = await Product.find(productQuery).populate("seller");
+
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);
     }
 });
+
 
 //get all products
 router.get("/", async (req, res) => {

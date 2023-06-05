@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import bluejeans from './bluejeans.jpg';
-import { removeProduct } from '../../redux/cartReducer';
+import { removeProduct, resetProduct } from '../../redux/cartReducer';
 import { Link, useNavigate } from 'react-router-dom';
 import publicRequest from '../../requests/requestMethos';
 import Swal from 'sweetalert2'
@@ -35,8 +35,9 @@ const CartPage = () => {
             },
         })
         publicRequest.post("orders", { products: cart.products.map(product => product._id).join().split(",") })
-        .then(res => {
-            Swal.close();
+            .then(res => {
+                Swal.close();
+                dispatch(resetProduct())
 
                 MySwal.fire(<p>Order has been placed</p>)
                     .then((result) => {

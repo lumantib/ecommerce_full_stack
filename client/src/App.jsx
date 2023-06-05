@@ -15,6 +15,8 @@ import Seller from "./components/Seller";
 import ItemsAddPage from "./components/Sellers/ItemsAddPage";
 import Home from "./pages/Home";
 import AdminViewOrderListPage from "./components/Admin/AdminPages/Products/AdminViewOrder/AdminViewOrderListPage";
+import AdminViewSeasonsListPage from "./components/Admin/AdminPages/Categories/AdminViewSeasons/AdminViewSeasonsListPage";
+import AdminViewCategoryListPage from "./components/Admin/AdminPages/Categories/AdminViewCategories/AdminViewCategoryListPage";
 
 
 const App = () => {
@@ -36,6 +38,8 @@ const App = () => {
         <Route path="products/all" element={<AdminViewAllProductsListPage />} />
         <Route path="products/sell" element={<SellerProductListPage />} />
         <Route path="products/orders" element={<AdminViewOrderListPage />} />
+        <Route path="type/seasons" element={<AdminViewSeasonsListPage />} />
+        <Route path="type/category" element={<AdminViewCategoryListPage />} />
         <Route path="users" element={<UserPage />} />
       </Route>
 

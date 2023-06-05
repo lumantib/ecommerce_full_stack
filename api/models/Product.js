@@ -17,6 +17,9 @@ const ProductSchema = new mongoose.Schema(
         categories: {
             type: Array
         },
+        seasons: {
+            type: Array
+        },
         isVerified: {
             type: Boolean,
             default: false,
@@ -33,7 +36,7 @@ const ProductSchema = new mongoose.Schema(
         payement_completed: {
             type: Boolean,
             default: false,
-        }
+        },
 
     },
     { timestamps: true }

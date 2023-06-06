@@ -40,3 +40,25 @@
 body {
   background-color: #282c34;
 }
+
+/* profile picture show upload picture text in center */
+.profile-picture {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  background-color: rgba(108, 108, 108, 0);
+  opacity: 0;
+  transition: all 0.15s ease-in-out;
+  color: white;
+}
+.profile-picture:hover {
+  background-color: #00000097;
+  opacity: 1;
+  /* backdrop-filter: blur(2px); */
+}
+
+.pp {
+  box-shadow: 0px 0px 5px 2px rgba(49, 49, 49, 0.189);
+  background-color: white;
+}

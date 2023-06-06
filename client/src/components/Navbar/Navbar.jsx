@@ -63,9 +63,8 @@ const Navbar = () => {
                                 <NavbarAvatar />
                                 :
                                 <>
-                                    <Link to="register">Signup</Link><button
-                                        data-te-target="#lumanti" data-te-toggle="modal"
-                                    >  Login</button>
+                                    <Link to="register">Signup</Link>
+                                    <Link to="login">Login</Link>
                                 </>
                         }
                     </div>

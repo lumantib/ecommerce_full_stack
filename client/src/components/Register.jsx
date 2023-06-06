@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Redirect, Route } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import publicRequest from '../requests/requestMethos';
 
 
 const Register = () => {
+  const [error, setError] = useState();
 
+  const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const navigate = useNavigate()
   const onSubmit = data => {
-    publicRequest.post('api/auth/register', data)
+    setIsLoading(true);
+    publicRequest.post('auth/register', data)
       .then(res => {
         console.log(res)
-        navigate('/');
+        navigate('/login');
       })
-      .catch(err => console.log(err))
+      .catch((error) => {
+        // Handle any network or server errors
+        setError(error.response.data.error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
     console.log(data)
   };
 
   return (
-    <div class="w-full ">
-      <div className='flex w-full justify-center items-center h-full py-8'>
-        <form action="" onSubmit={handleSubmit(onSubmit)} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[500px]">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-400 to-indigo-500">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+        <form action="" onSubmit={handleSubmit(onSubmit)} class="">
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
               username
@@ -39,15 +48,6 @@ const Register = () => {
 
             />
           </div>
-          <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-              Mobile Number
-            </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="num" type="number" placeholder=""
-              {...register("phoneNumber")}
-
-            />
-          </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
               Password
@@ -57,11 +57,16 @@ const Register = () => {
 
             />
           </div>
-          <div>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-              Sign in
-            </button>
-          </div>
+          {error && (
+            <div className="text-red-500">{error}</div>
+          )}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+          >
+            {isLoading ? 'Logging In...' : 'Login'}
+          </button>
         </form>
       </div>
     </div>

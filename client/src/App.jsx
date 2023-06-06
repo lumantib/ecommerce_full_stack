@@ -23,12 +23,12 @@ const App = () => {
   return (
 
     <Routes>
+      <Route path="login" element={<LoginPage />} />
+      <Route path="register" element={<Register />} />
       <Route path="" element={<LayoutsWithDefaultNavbar />}>
         <Route path="" element={<Home />} />
         <Route path="product" element={<Products />} />
         <Route path="product/checkout" element={<CartPage />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<LoginPage />} />
         <Route path="seller" element={<Seller />} />
         <Route path="seller/add" element={<ItemsAddPage />} />
         <Route path="settings" element={<Settings />} />

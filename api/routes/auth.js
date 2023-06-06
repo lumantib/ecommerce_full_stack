@@ -5,22 +5,49 @@ const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware");
 const { verifyToken } = require("./verifyToken");
 
-//register
+// register
 router.post("/register", async (req, res) => {
-    const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: CryptoJS.AES.encrypt(req.body.password, process.env.PASS_SEC).toString(),
-    });
+    const { username, email, password } = req.body;
 
     try {
-        const savedUser = await newUser.save();
-        res.status(201).json(savedUser)
-    } catch (err) {
-        res.status(500).json(err);
-    }
+        // Check if the username or email already exists in the database
+        const existingUser = await User.findOne({
+            $or: [{ username: username }, { email: email }],
+        });
 
+        if (existingUser) {
+            // User or email already exists, send appropriate error message
+            if (existingUser.username === username) {
+                return res
+                    .status(400)
+                    .json({ error: "Username is already taken. Please choose a different username." });
+            }
+            if (existingUser.email === email) {
+                return res
+                    .status(400)
+                    .json({ error: "Email is already registered. Please use a different email." });
+            }
+        }
+
+        // Encrypt the password
+        const encryptedPassword = CryptoJS.AES.encrypt(password, process.env.PASS_SEC).toString();
+
+        // Create a new user object
+        const newUser = new User({
+            username,
+            email,
+            password: encryptedPassword,
+        });
+
+        // Save the new user to the database
+        const savedUser = await newUser.save();
+
+        res.status(201).json(savedUser);
+    } catch (err) {
+        res.status(500).json({ error: "An error occurred while registering the user." });
+    }
 });
+
 
 
 //LOGIN

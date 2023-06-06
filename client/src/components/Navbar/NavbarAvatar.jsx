@@ -1,5 +1,5 @@
+import { Avatar, List, ListItem, ListItemText, Popover } from '@mui/material';
 import React, { useState } from 'react';
-import { Button, Popover, Typography, Avatar, List, ListItem, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const LogoutPopover = () => {
@@ -48,9 +48,6 @@ const LogoutPopover = () => {
                 <List component="nav">
                     <ListItem button component={Link} to="/dashboard/products/sell">
                         <ListItemText primary="Sell Products" sx={{ color: '#333' }} />
-                    </ListItem>
-                    <ListItem button component={Link} to="/settings">
-                        <ListItemText primary="Settings" sx={{ color: '#333' }} />
                     </ListItem>
                     <ListItem button component={Link} to="/login" onClick={() => localStorage.clear()}>
                         <ListItemText primary="Logout" sx={{ color: '#333' }} />

@@ -21,10 +21,11 @@ const LoginPage = () => {
         if (response.status === 200) {
           // Successful login, handle the response as needed
           const result = response.data;
-          localStorage.setItem("token", result.accessToken)
-          localStorage.setItem("username", result.username)
-          localStorage.setItem("email", result.email)
-          localStorage.setItem("isAdmin", result.isAdmin)
+          console.log("resuslt", result)
+          localStorage.setItem("token", result?.accessToken)
+          localStorage.setItem("username", result?.username)
+          localStorage.setItem("email", result?.email)
+          localStorage.setItem("isAdmin", result?.isAdmin)
           result.isAdmin ?
             navigate('/dashboard/products/all')
             :

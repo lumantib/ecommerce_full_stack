@@ -43,7 +43,9 @@ const Navbar = () => {
         <Container className='drop-shadow-lg z-[10] shadow-sm'>
             <Wrapper>
                 <Left>
-                    <Logo>Affordable Thrift Store</Logo>
+                    <Link to="">
+                        <Logo>Affordable Thrift Store</Logo>
+                    </Link>
                 </Left>
                 <Center>
 

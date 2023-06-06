@@ -65,7 +65,7 @@ const Register = () => {
             disabled={isLoading}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
           >
-            {isLoading ? 'Logging In...' : 'Login'}
+            {isLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
       </div>

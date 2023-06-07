@@ -1,8 +1,11 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import About from "./components/Admin/About";
+import AdminViewUsersListPage from "./components/Admin/AdminPages/AdminViewUsers/AdminViewUsersListPage";
+import AdminViewCategoryListPage from "./components/Admin/AdminPages/Categories/AdminViewCategories/AdminViewCategoryListPage";
+import AdminViewSeasonsListPage from "./components/Admin/AdminPages/Categories/AdminViewSeasons/AdminViewSeasonsListPage";
 import AdminViewAllProductsListPage from "./components/Admin/AdminPages/Products/AdminViewAllProducts/AdminViewAllProductsListPage";
+import AdminViewOrderListPage from "./components/Admin/AdminPages/Products/AdminViewOrder/AdminViewOrderListPage";
 import SellerProductListPage from "./components/Admin/AdminPages/Products/SellerProducts/SellerProductListPage";
-import UserPage from "./components/Admin/AdminPages/Users/UserPage";
 import AdminWrapper from "./components/Admin/AdminWrapper";
 import Settings from "./components/Admin/Settings";
 import CartPage from "./components/CartPage/CartPage";
@@ -14,9 +17,6 @@ import Register from "./components/Register";
 import Seller from "./components/Seller";
 import ItemsAddPage from "./components/Sellers/ItemsAddPage";
 import Home from "./pages/Home";
-import AdminViewOrderListPage from "./components/Admin/AdminPages/Products/AdminViewOrder/AdminViewOrderListPage";
-import AdminViewSeasonsListPage from "./components/Admin/AdminPages/Categories/AdminViewSeasons/AdminViewSeasonsListPage";
-import AdminViewCategoryListPage from "./components/Admin/AdminPages/Categories/AdminViewCategories/AdminViewCategoryListPage";
 
 
 const App = () => {
@@ -40,7 +40,7 @@ const App = () => {
         <Route path="products/orders" element={<AdminViewOrderListPage />} />
         <Route path="type/seasons" element={<AdminViewSeasonsListPage />} />
         <Route path="type/category" element={<AdminViewCategoryListPage />} />
-        <Route path="users" element={<UserPage />} />
+        <Route path="users" element={<AdminViewUsersListPage />} />
       </Route>
 
     </Routes>

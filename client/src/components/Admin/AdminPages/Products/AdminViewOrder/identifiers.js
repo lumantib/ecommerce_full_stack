@@ -5,11 +5,11 @@ const identifiers = {
         button_label: "View Order",
         modal_mode: "edit"
     },
-    add: {
-        title: "Add New Product",
-        button_label: "Add",
-        modal_mode: "add"
-    },
+    // add: {
+    //     title: "Add New Product",
+    //     button_label: "Add",
+    //     modal_mode: "add"
+    // },
     // delete: {
     //     title: "Delete Remove",
     //     button_label: "Delete Removes",

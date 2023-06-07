@@ -26,6 +26,23 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
         res.status(500).json(err);
     }
 });
+//update staffs is admin boolean
+router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: req.body,
+            },
+            { new: true }
+        );
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err);
+    }
+});
 
 
 //delete
@@ -39,12 +56,12 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 })
 
 //get user
-router.get("/find/:id",verifyTokenAndAdmin,async(req,res)=>{
-    try{
-        const user=await User.findById(req.params.id);
-        const{password,...others}=user._doc;
+router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        const { password, ...others } = user._doc;
         res.status(200).json(others);
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err);
     }
 });

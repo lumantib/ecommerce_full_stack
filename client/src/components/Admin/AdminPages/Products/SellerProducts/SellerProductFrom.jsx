@@ -37,6 +37,7 @@ const SellerProductFrom = (props) => {
     // react hook form setup
     const { register, handleSubmit, watch, reset, formState: { errors }, unregister, control } = useForm({
         defaultValues: {
+            ...props?.selectedData
         }
     });
 
@@ -107,7 +108,7 @@ const SellerProductFrom = (props) => {
                                 {
                                     types?.filter(type => type.type == "Category")?.map(type => {
                                         return (
-                                            <MenuItem key={type._id} value={type.name}>
+                                            <MenuItem key={type._id} value={type.name} defaultChecked={true}>
                                                 {type.name}
                                             </MenuItem>
                                         )

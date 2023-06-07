@@ -88,7 +88,7 @@ const AdminViewOrderListPage = () => {
         <>
             <MuiModal handleOpen={handleOpen} handleClose={handleClose} open={open} setOpen={setOpen} >
                 {
-                    modalMode === identifiers.add.modal_mode && (
+                    modalMode === identifiers?.add?.modal_mode && (
                         <ModalContainer title={identifiers.add.title} handleClose={handleClose} identifiers={identifiers} modalMode={modalMode}>
                             <AdminOrderRespondFrom
                                 {...modalProps}

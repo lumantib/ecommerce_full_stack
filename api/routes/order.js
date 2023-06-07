@@ -6,12 +6,32 @@ const { verifyToken,
 } = require("./verifyToken");
 
 const router = require("express").Router();
-
 //get all products of seller
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
     try {
-        const product = await Order.find().populate("buyer").populate("products");
-        res.status(200).json(product);
+        const orders = await Order.find()
+            .populate("buyer")
+            .populate("products");
+
+        let totalPrice = 0;
+        let totalPayementCompletedPrice = 0;
+        let totalPayementRemainingPrice = 0;
+
+        const ordersWithTotalPrice = orders.map((order) => {
+            let orderTotalPrice = 0;
+
+            order.products.forEach((product) => {
+                order.payement_completed ? (totalPayementCompletedPrice += product.price) : (totalPayementRemainingPrice += product.price)
+                console.log(product)
+                orderTotalPrice += product.price;
+            });
+
+            totalPrice += orderTotalPrice;
+
+            return { ...order._doc, totalPrice: orderTotalPrice };
+        });
+
+        res.status(200).json({ orders: ordersWithTotalPrice, totalPrice, totalPayementCompletedPrice, totalPayementRemainingPrice });
     } catch (err) {
         res.status(500).json(err);
     }
@@ -66,12 +86,13 @@ router.post("/", verifyToken, async (req, res) => {
 
 
 //update
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
+        const payement_completed = req.body.payement_completed
         const updatedOrder = await Order.findByIdAndUpdate(
             req.params.id,
             {
-                $set: req.body,
+                $set: { payement_completed: payement_completed },
             },
             { new: true }
         );
@@ -91,26 +112,6 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
         res.status(200).json("Order has been deleted...");
     } catch (err) {
         res.status(500).json(err)
-    }
-});
-
-//get user orders
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
-    try {
-        const orders = await Order.find({ userId: req.params.userId });
-        res.status(200).json(cart);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-// //get all 
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
-    try {
-        const orders = await Order.find();
-        res.status(200).json(orders);
-    } catch (err) {
-        res.status(500).json(err);
     }
 });
 

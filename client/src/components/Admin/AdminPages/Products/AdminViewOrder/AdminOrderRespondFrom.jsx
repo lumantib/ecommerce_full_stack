@@ -21,7 +21,7 @@ const AdminOrderRespondFrom = (props) => {
     const onSubmit = data => {
         console.log("submit data", data)
         props.setIsLoading(true)
-        publicRequest.patch('/products/verify', data)
+        publicRequest.patch(`/orders/${props?.selectedData?._id}`, data)
             .then(res => {
                 console.log(res)
                 props.setResponseMessage("Data has been added")
@@ -64,12 +64,12 @@ const AdminOrderRespondFrom = (props) => {
                     fullWidth
                     defaultValue=""
                     size='small'
-                    label="Verified"
-                    inputProps={register('isVerified', { required: 'Type Required', })}
-                    error={errors.isVerified}
-                    helperText={errors.isVerified?.message}
+                    label="Payement Completion"
+                    inputProps={register('payement_completed', { required: 'Type Required', })}
+                    error={errors.payement_completed}
+                    helperText={errors.payement_completed?.message}
                 >
-                    <MenuItem value={false}>False</MenuItem>
+                    <MenuItem value="false" selected>False</MenuItem>
                     <MenuItem value={true}>True</MenuItem>
                 </TextField>
             </div>

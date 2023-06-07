@@ -20,15 +20,18 @@ const AdminViewOrderListPage = () => {
 
     // Api Calls
     const [data, setData] = useState([]);
+    const [totalData, setTotalData] = useState(0);
     const fetchData = () => {
         publicRequest.get('/orders')
             .then(res => {
-                res?.data?.forEach(order => {
+                console.log(res?.data)
+                res?.data?.orders?.forEach(order => {
                     delete order.buyer._id
                     Object.assign(order, order.buyer)
                 });
                 console.log(res.data)
-                setData(res?.data)
+                setTotalData(res?.data)
+                setData(res?.data?.orders)
             })
             .catch(err => console.log(err))
     }
@@ -117,7 +120,11 @@ const AdminViewOrderListPage = () => {
                 statusFilter={statusFilter}
             />
             <SimpleSnackbar message={responseMessage} open={openSnackbar} setOpen={setOpenSnackbar} />
-
+            <div>
+                <p className='py-2 my-2'>Remaining Price: Rs. {totalData.totalPayementRemainingPrice}</p>
+                <p className='py-2 my-2'>Recieved Price: Rs. {totalData.totalPayementCompletedPrice}</p>
+                <p className='py-2 my-2'>Total Price: Rs. {totalData.totalPrice}</p>
+            </div>
         </>
     )
 }

@@ -5,7 +5,9 @@ import AdminViewCategoryListPage from "./components/Admin/AdminPages/Categories/
 import AdminViewSeasonsListPage from "./components/Admin/AdminPages/Categories/AdminViewSeasons/AdminViewSeasonsListPage";
 import AdminViewAllProductsListPage from "./components/Admin/AdminPages/Products/AdminViewAllProducts/AdminViewAllProductsListPage";
 import AdminViewOrderListPage from "./components/Admin/AdminPages/Products/AdminViewOrder/AdminViewOrderListPage";
+import SellerPendingVerifiedProductListPage from "./components/Admin/AdminPages/Products/PendingToBeVerifiedProducts/SellerPendingVerifiedProductListPage";
 import SellerProductListPage from "./components/Admin/AdminPages/Products/SellerProducts/SellerProductListPage";
+import SellerVerifiedProductListPage from "./components/Admin/AdminPages/Products/VerifiedProducts/SellerVerifiedProductListPage";
 import AdminWrapper from "./components/Admin/AdminWrapper";
 import Settings from "./components/Admin/Settings";
 import CartPage from "./components/CartPage/CartPage";
@@ -37,6 +39,8 @@ const App = () => {
       <Route path="dashboard" element={<LayoutsWithNavbar />}>
         <Route path="products/all" element={<AdminViewAllProductsListPage />} />
         <Route path="products/sell" element={<SellerProductListPage />} />
+        <Route path="products/sell-verified" element={<SellerVerifiedProductListPage />} />
+        <Route path="products/pending" element={<SellerPendingVerifiedProductListPage />} />
         <Route path="products/orders" element={<AdminViewOrderListPage />} />
         <Route path="type/seasons" element={<AdminViewSeasonsListPage />} />
         <Route path="type/category" element={<AdminViewCategoryListPage />} />

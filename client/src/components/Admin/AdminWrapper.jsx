@@ -7,8 +7,8 @@ const AdminWrapper = (props) => {
   return (
     <>
       <AppBar />
-      <Box height={30} />
-      <Box sx={{ display: 'flex' }}>
+      {/* <Box height={30} /> */}
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <SideNavbar>
           {props.children}
         </SideNavbar>

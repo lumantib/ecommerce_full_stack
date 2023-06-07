@@ -30,10 +30,13 @@ const Register = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-400 to-indigo-500">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">
+          Register
+        </h1>
         <form action="" onSubmit={handleSubmit(onSubmit)} class="">
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-              username
+              Username
             </label>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username"
               {...register("username")}

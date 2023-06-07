@@ -38,7 +38,7 @@ const CartPage = () => {
             });
             Swal.close();
             dispatch(resetProduct());
-            MySwal.fire(<p>Order has been placed</p>).then((result) => {
+            MySwal.fire(<p>Order has been placed</p>, <p className='font-bold'>Your item(s) will be delivered in 2-3 days.</p>).then((result) => {
                 if (result.isConfirmed) {
                     navigate('/');
                 }
@@ -59,7 +59,7 @@ const CartPage = () => {
             {cart.products.length === 0 && (
                 <div className="bg-white p-4 shadow sm:rounded-lg text-center">
                     <p className="text-gray-500 hover:text">
-                        Your cart is empty. <Link to="/">View other products</Link>
+                        Your cart is empty. <Link to="/" className='text-blue-600 font-bold'>View other products</Link>
                     </p>
                 </div>
             )}
@@ -75,7 +75,7 @@ const CartPage = () => {
                                 >
                                     <div className="w-16 h-16 flex-shrink-0">
                                         <img
-                                            src={bluejeans}
+                                            src={`http://localhost:5000/photo${item.photo}`}
                                             alt={item.name}
                                             className="w-full h-full object-cover"
                                         />
@@ -84,7 +84,7 @@ const CartPage = () => {
                                         <h3 className="text-lg font-medium text-gray-900">
                                             {item.name}
                                         </h3>
-                                        <p className="text-gray-500">${item.price}</p>
+                                        <p className="text-gray-500">Rs. {item.price}</p>
                                         {item.buyer && (
                                             <p className="text-red-500">Already bought</p>
                                         )}
@@ -102,7 +102,7 @@ const CartPage = () => {
                                 </div>
                             ))}
                         </div>
-                        <div className="bg-gray-100 px-4 py-3 flex justify-between">
+                        <div className="bg-gray-100 px-4 py-3 flex justify-between items-center">
                             <p className="text-gray-600 font-medium">
                                 Total: Rs {calculateTotal()}
                             </p>

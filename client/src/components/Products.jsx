@@ -19,7 +19,7 @@ const ProductListPage = () => {
     }
     const [prouctsData, setProuctsData] = useState([]);
     useEffect(() => {
-        publicRequest.get(`products/isVerified?categories=${searchParams.get('category')}`)
+        publicRequest.get(`products/isVerified?category=${searchParams.get('category')}`)
             .then(res => setProuctsData(res?.data))
             .catch(err => console.log(err))
     }, []);
@@ -45,7 +45,7 @@ const ProductListPage = () => {
                         >
                             <div className="relative h-56">
 
-                                <div className="w-full h-full filter overflow-hidden hover bg-no-repeat object-fit bg-cover" style={{ backgroundImage: `url(${bluejeans})` }}>
+                                <div className="w-full h-full filter overflow-hidden hover bg-no-repeat object-fit bg-cover" style={{ backgroundImage: `url(http://localhost:5000/photo${product.photo})` }}>
                                     {/* <img
                                         src={bluejeans}
                                         alt={product.name}

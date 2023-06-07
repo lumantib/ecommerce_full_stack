@@ -19,6 +19,7 @@ import Register from "./components/Register";
 import Seller from "./components/Seller";
 import ItemsAddPage from "./components/Sellers/ItemsAddPage";
 import Home from "./pages/Home";
+import ProductDescriptionPage from "./components/ProductDetailPage/ProductDescriptionPage";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
       <Route path="" element={<LayoutsWithDefaultNavbar />}>
         <Route path="" element={<Home />} />
         <Route path="product" element={<Products />} />
+        <Route path="product/view/:id" element={<ProductDescriptionPage />} />
         <Route path="product/checkout" element={<CartPage />} />
         <Route path="seller" element={<Seller />} />
         <Route path="seller/add" element={<ItemsAddPage />} />

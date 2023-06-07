@@ -41,11 +41,49 @@ const SellerProductFrom = (props) => {
         }
     });
 
+
+    const [file, setFile] = React.useState(null)
+
+    const handleChange = (newFile) => {
+        const selectedFile = newFile.target.files[0];
+        const fileSizeInBytes = selectedFile.size;
+        const fileSizeInKb = fileSizeInBytes / 1024;
+
+        // Set the maximum allowed file size (in kilobytes)
+        const maxSizeInKb = 1000;
+        const maxSizeInMb = maxSizeInKb / 1000;
+
+        if (fileSizeInKb > maxSizeInKb) {
+            // File size exceeds the allowed limit
+            alert(`File size must not exceed ${maxSizeInMb} MB`);
+            return;
+        }
+
+        // Set the allowed file types
+        const allowedFileTypes = ["image/jpeg", "image/png", "image/gif"];
+
+        if (!allowedFileTypes.includes(selectedFile.type)) {
+            // Invalid file type
+            alert("Invalid file type. Only JPEG, PNG, and GIF files are allowed.");
+            return;
+        }
+
+        setFile(selectedFile);
+    };
+
     // submit data
     const onSubmit = data => {
         console.log("submit data", data)
+
+        const formData = new FormData();
+        formData.append('photo', file)
+        formData.append('name', data.name)
+        formData.append('price', data.price)
+        formData.append('description', data.description)
+        formData.append('categories', data.categories)
+        formData.append('seasons', data.seasons)
         props.setIsLoading(true)
-        publicRequest.post('/products', data)
+        publicRequest.post('/products', formData)
             .then(res => {
                 console.log(res)
                 props.setResponseMessage("Data has been added")
@@ -66,6 +104,20 @@ const SellerProductFrom = (props) => {
     return (
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex flex-col gap-4 p-4 h-60 overflow-auto'>
+                <Button
+                    variant="outlined"
+                    component="label"
+                >
+                    Upload File
+                    <input
+                        name="image"
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        onChange={(e) => handleChange(e)}
+                    />
+                </Button>
+
                 <TextField
                     label="Product Name"
                     id="outlined-size-small"

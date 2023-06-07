@@ -20,9 +20,12 @@ const ProductSchema = new mongoose.Schema(
         seasons: {
             type: Array
         },
+        photo: {
+            type: String
+        },
         isVerified: {
             type: Boolean,
-            default: true,
+            default: false,
         },
         buyer: {
             type: mongoose.Schema.ObjectId,

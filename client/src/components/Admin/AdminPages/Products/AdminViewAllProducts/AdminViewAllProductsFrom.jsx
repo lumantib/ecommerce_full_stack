@@ -52,7 +52,7 @@ const AdminViewAllProductsFrom = (props) => {
                     error={errors.isVerified}
                     helperText={errors.isVerified?.message}
                 >
-                    <MenuItem value={false}>False</MenuItem>
+                    <MenuItem value="false">False</MenuItem>
                     <MenuItem value={true}>True</MenuItem>
                 </TextField>
             </div>

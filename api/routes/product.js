@@ -1,22 +1,74 @@
+const path = require("path");
 const Product = require("../models/Product");
 const { verifyToken,
     verifyTokenAndAuthorization,
     verifyTokenAndAdmin
 } = require("./verifyToken");
-
+const multer = require('multer');
 const router = require("express").Router();
 
-//create
-router.post("/", verifyToken, async (req, res) => {
+// Set storage for uploaded photos
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../Images')); // Absolute path to the destination folder for uploaded photos
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        const ext = path.extname(file.originalname);
+        cb(null, uniqueSuffix + ext); // Set the filename of the uploaded photo
+    },
+});
+
+// File filter to only allow certain file types (e.g., images)
+const fileFilter = (req, file, cb) => {
+    if (
+        file.mimetype === 'image/jpeg' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/png'
+    ) {
+        cb(null, true); // Accept the file
+    } else {
+        cb(null, false); // Reject the file
+    }
+};
+
+// Initialize multer with the storage and file filter options
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+// Create route with file upload
+router.post('/', verifyToken, upload.single('photo'), async (req, res) => {
     try {
-        const userId = req.user.id
-        const newProduct = new Product({ ...req.body, seller: userId })
+        const userId = req.user.id;
+        const { name, price, description, categories, seasons } = req.body;
+
+        if (!name || !price) {
+            return res.status(400).json({ error: 'Name and price are required fields.' });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ error: 'Product photo is required.' });
+        }
+
+        const photoPath = req.file.filename;
+
+        const newProduct = new Product({
+            name: name,
+            price: price,
+            photo: photoPath,
+            description: description,
+            seller: userId,
+            categories: categories.split(","),
+            seasons: seasons.split(","),
+        });
+
         const savedProduct = await newProduct.save();
         res.status(200).json(savedProduct);
     } catch (err) {
-        res.status(500).json(err);
+        console.error(err);
+        res.status(500).json({ error: 'Failed to create product. Please try again later.' });
     }
 });
+
 
 //update
 router.patch("/verify", verifyTokenAndAdmin, async (req, res) => {
@@ -88,25 +140,32 @@ router.get("/seller", verifyToken, async (req, res) => {
     }
 });
 
-
 // get all products which are verified and match specific categories
 router.get("/isVerified", async (req, res) => {
     try {
-        const { categories } = req.query;
+        const { category } = req.query;
         let productQuery = {
             isVerified: true,
             buyer: { $exists: false }
         };
-
-        if (categories) {
-            productQuery.categories = { $in: categories };
+        console.log("category", category)
+        if (category) {
+            productQuery.categories = { $in: category };
         }
+        console.log("category", productQuery)
 
-        const product = await Product.find(productQuery).populate("seller");
+        const products = await Product.find(productQuery).populate("seller");
 
-        res.status(200).json(product);
+        // Modify the response to send the relative photo path instead of the absolute file path
+        const modifiedProducts = products.map((product) => ({
+            ...product._doc,
+            photo: `/${product._doc.photo}` // Assuming the photos are served from the "/photos" route
+        }));
+
+        res.status(200).json(modifiedProducts);
     } catch (err) {
-        res.status(500).json(err);
+        console.error(err);
+        res.status(500).json({ error: "Failed to retrieve products. Please try again later." });
     }
 });
 

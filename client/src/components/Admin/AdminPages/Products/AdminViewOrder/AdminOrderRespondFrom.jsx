@@ -48,7 +48,7 @@ const AdminOrderRespondFrom = (props) => {
                             return (
                                 <div key={product.id} className={`flex items-center`}>
                                     <div className="w-16 h-16 flex-shrink-0">
-                                        <img src={bluejeans} alt={product.name} className="w-full h-full object-cover" />
+                                        <img src={`http://localhost:5000/photo/${product.photo}`} alt={product.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1 ml-4">
                                         <h3 className="text-lg font-medium text-gray-900">{product.name}</h3>

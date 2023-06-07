@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import publicRequest from '../requests/requestMethos';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [error, setError] = useState();
@@ -98,6 +98,7 @@ const LoginPage = () => {
           >
             {isLoading ? 'Logging In...' : 'Login'}
           </button>
+          <p>Don't have an account? <Link to="/register" className='text-blue-700 font-bold'>Register</Link> </p>
         </form>
       </div>
     </div>

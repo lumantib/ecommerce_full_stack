@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Redirect, Route } from 'react-router-dom';
+import { useNavigate, Redirect, Route, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import publicRequest from '../requests/requestMethos';
 
@@ -66,10 +66,11 @@ const Register = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300 mb-2"
           >
             {isLoading ? 'Registering...' : 'Register'}
           </button>
+          <p>Already have an account? <Link to="/login" className='text-blue-600 font-bold'>Login</Link> </p>
         </form>
       </div>
     </div>

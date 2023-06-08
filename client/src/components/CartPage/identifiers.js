@@ -2,7 +2,7 @@ const identifiers = {
     title: "Orders List",
     response: {
         title: "Update Product",
-        button_label: "Update Statuss",
+        button_label: "Update Status",
         modal_mode: "edit"
     },
     add_new_option: false,

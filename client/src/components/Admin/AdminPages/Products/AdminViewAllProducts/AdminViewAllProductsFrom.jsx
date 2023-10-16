@@ -24,7 +24,7 @@ const AdminViewAllProductsFrom = (props) => {
         publicRequest.patch('/products/verify', data)
             .then(res => {
                 console.log(res)
-                props.setResponseMessage("Data has been added")
+                props.setResponseMessage("Product has been verified.")
                 props.fetchData()
                 props.handleClose()
             })

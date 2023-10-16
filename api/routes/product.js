@@ -65,9 +65,92 @@ router.post('/', verifyToken, upload.single('photo'), async (req, res) => {
         res.status(200).json(savedProduct);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Failed to create product. Please try again later.' });
+        res.status(500).json({ error: 'Failed to create product. Please try again later.', err });
     }
 });
+
+router.patch('/seller/:id', verifyToken, upload.single('photo'), async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const productId = req.params.id;
+        const { name, price, description, categories, seasons } = req.body;
+
+        if (!name || !price) {
+            return res.status(400).json({ error: 'Name and price are required fields.' });
+        }
+
+        // You can check if a new photo was uploaded and update it if needed
+        let photoPath;
+        if (req.file) {
+            photoPath = req.file.filename;
+        }
+
+        // Find the existing product by ID
+        const existingProduct = await Product.findById(productId);
+
+        if (!existingProduct) {
+            return res.status(404).json({ error: 'Product not found.' });
+        }
+
+        // Check if the user is the owner of the product
+        if (existingProduct.seller.toString() !== userId) {
+            return res.status(403).json({ error: 'You are not authorized to update this product.' });
+        }
+
+        // Update the product properties
+        existingProduct.name = name;
+        existingProduct.price = price;
+        if (photoPath) {
+            existingProduct.photo = photoPath;
+        }
+        existingProduct.description = description;
+        existingProduct.categories = categories.split(",");
+        existingProduct.seasons = seasons.split(",");
+
+        // Save the updated product
+        const updatedProduct = await existingProduct.save();
+
+        res.status(200).json(updatedProduct);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to update the product. Please try again later.' });
+    }
+});
+
+// Create route with file upload
+// router.patch('/seller/:id', verifyToken, upload.single('photo'), async (req, res) => {
+//     try {
+//         const userId = req.user.id;
+//         console.log('req.body: ', await req.body);
+//         const { name, price, description, categories, seasons } = req.body;
+
+//         if (!name || !price) {
+//             return res.status(400).json({ error: 'Name and price are required fields.' });
+//         }
+
+//         if (!req.file) {
+//             return res.status(400).json({ error: 'Product photo is required.' });
+//         }
+
+//         // const photoPath = req.file.filename;
+
+//         // const newProduct = new Product({
+//         //     name: name,
+//         //     price: price,
+//         //     photo: photoPath,
+//         //     description: description,
+//         //     seller: userId,
+//         //     categories: categories.split(","),
+//         //     seasons: seasons.split(","),
+//         // });
+
+//         // const savedProduct = await newProduct.save();
+//         res.status(200).json(savedProduct);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Failed to create product. Please try again later.' });
+//     }
+// });
 
 
 //update

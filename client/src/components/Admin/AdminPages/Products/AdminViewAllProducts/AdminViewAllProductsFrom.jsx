@@ -65,7 +65,7 @@ const AdminViewAllProductsFrom = (props) => {
                     className='w-full sm:w-auto bg-primary'
                     type="submit"
                 >
-                    Send Request
+                    Update
                 </Button>
             </ConfirmationButtonsContainer>
         </form>

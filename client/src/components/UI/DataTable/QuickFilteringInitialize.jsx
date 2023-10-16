@@ -19,9 +19,9 @@ export default function QuickFilteringInitialize(props) {
         }}
         components={{ Toolbar: GridToolbar }}
 
-        filterModel={{
-          items: props?.statusFilter ? props?.statusFilter : []
-        }}
+        // filterModel={{
+        //   items: props?.statusFilter ? props?.statusFilter : []
+        // }}
 
         // initialState={{
         //   ...props?.data,
@@ -36,7 +36,7 @@ export default function QuickFilteringInitialize(props) {
         slotProps={{
           toolbar: {
             showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 },
+            // quickFilterProps: { debounceMs: 500 },
           },
         }}
         checkboxSelection={props.identifiers.multiple_deletable}

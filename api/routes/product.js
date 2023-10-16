@@ -203,7 +203,9 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 //get product
 router.get("/find/:id", async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id)
+            .sort({ createdAt: -1 }); // Sort by 'createdAt' in descending order (latest first)
+
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);
@@ -216,7 +218,9 @@ router.get("/seller", verifyToken, async (req, res) => {
     try {
         const userId = req.user.id;
 
-        const product = await Product.find({ seller: userId }).populate("seller");
+        const product = await Product.find({ seller: userId }).populate("seller")
+            .sort({ createdAt: -1 }); // Sort by 'createdAt' in descending order (latest first)
+
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);
@@ -237,7 +241,9 @@ router.get("/isVerified", async (req, res) => {
         }
         console.log("category", productQuery)
 
-        const products = await Product.find(productQuery).populate("seller");
+        const products = await Product.find(productQuery).populate("seller")
+            .sort({ createdAt: -1 }); // Sort by 'createdAt' in descending order (latest first)
+
 
         // Modify the response to send the relative photo path instead of the absolute file path
         const modifiedProducts = products.map((product) => ({
@@ -257,7 +263,9 @@ router.get("/isVerified", async (req, res) => {
 router.get("/", async (req, res) => {
 
     try {
-        const product = await Product.find().populate("seller").populate("buyer");
+        const product = await Product.find().populate("seller").populate("buyer")
+            .sort({ createdAt: -1 }); // Sort by 'createdAt' in descending order (latest first)
+        
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);

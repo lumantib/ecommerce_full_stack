@@ -41,7 +41,7 @@ router.post(
 router.get('/', async (req, res) => {
     try {
         const filter = req.query.type ? { type: req.query.type } : {};
-        const types = await Type.find(filter);
+        const types = await Type.find(filter).sort({ createdAt: -1 });
         res.status(200).json(types);
     } catch (err) {
         res.status(500).json(err);

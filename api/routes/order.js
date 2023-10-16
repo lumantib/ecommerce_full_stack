@@ -11,7 +11,9 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
     try {
         const orders = await Order.find()
             .populate("buyer")
-            .populate("products");
+            .populate("products")
+            .sort({ createdAt: -1 }); // Sort by 'createdAt' in descending order (latest first)
+
 
         let totalPrice = 0;
         let totalPayementCompletedPrice = 0;

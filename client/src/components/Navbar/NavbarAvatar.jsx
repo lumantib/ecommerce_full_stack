@@ -23,7 +23,7 @@ const LogoutPopover = () => {
 
     return (
         <div>
-            <Avatar sx={{ width: 32, height: 32, cursor: "pointer" }} onClick={handleClick}>U</Avatar>
+            <Avatar sx={{ width: 32, height: 32, cursor: "pointer" }} onClick={handleClick}>{localStorage.getItem('username')?.[0]}</Avatar>
             <Popover
                 id={id}
                 open={open}

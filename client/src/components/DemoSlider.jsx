@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import { HashLink } from 'react-router-hash-link';
 const Wrapper = styled.div`
     display:flex;
     height:600px;
@@ -34,7 +34,7 @@ const DemoSlider = () => {
               <h1 className="font-bold text-[50px] text-center">Summer Collection</h1><br />
               <p className="font-bold text-[22px] mt-6 tracking-widest">Check out the website every @Friday
                 <br /> to get heavy discount upto 50%</p>
-              <Link to="#shop"><button className=" font-bold p-2 border-current mt-8 ring-black bg-slate-300 text-black">Shop now</button></Link>
+              <HashLink smooth to="/#category"><button className=" font-bold p-2 border-current mt-8 ring-black bg-slate-300 text-black">Shop now</button></HashLink>
             </div>
           </div>
         </SwiperSlide>
@@ -47,7 +47,9 @@ const DemoSlider = () => {
                 best dress for your fit at affordable price. <br />
               </p>
               <p className="font-bold text-[30px] text-center tracking-wider">Grab the hot offer!!!</p>
-              <button className="text-center font-bold p-2 border-current mt-8 bg-slate-300">Shop Now</button>
+              <HashLink smooth to="/#category">
+                <button className="text-center font-bold p-2 border-current mt-8 bg-slate-300">Shop Now</button>
+              </HashLink>
             </div>
           </div>
         </SwiperSlide>
@@ -58,7 +60,7 @@ const DemoSlider = () => {
               <h1 className="font-bold text-[50px] text-center">Men's Collection</h1>
               <p className="font-bold text-[20px] text-justify m-5">Exclusive second hand men's item only at @Affordable Thrift Store</p>
               <p className="font-bold text-[22px] text-center tracking-wider">Hurry up and grab it before its gone!!!</p>
-              <button className="text-center font-bold p-2 border-current mt-8 bg-slate-300">Shop Now</button>
+              <HashLink smooth to="/#category" className="text-center font-bold p-2 border-current mt-8 bg-slate-300">Shop Now</HashLink>
             </div>
           </div>
         </SwiperSlide>
@@ -70,7 +72,7 @@ const DemoSlider = () => {
               <p className="text-[20px] font-bold m-4 flex flex-col text-justify text-center">Buy clothes, accessories and toys for kids only at
                 <br />@Affordable Thrift Store</p>
               <p className="text-[20px] font-bold">Hurry up and grab the amazing offer for your kids!!!</p>
-              <button className="text-[20px] font-bold p-2 mt-8 border-current bg-slate-300">Shop Now</button>
+              <HashLink smooth to="/#category" className="text-[20px] font-bold p-2 mt-8 border-current bg-slate-300">Shop Now</HashLink>
             </div>
           </div>
         </SwiperSlide>

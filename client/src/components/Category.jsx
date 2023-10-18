@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const categories = () => {
     return (
-        <div className='flex'>
+        <div className='flex' id="category">
             <div className='h-full w-[550px] flex flex-col justify-center items-center'>
                 <img src="./images/women.jpg" className='h-[450px] w-[350px]' />
                 <p className='font-bold'>Women's Wear</p>

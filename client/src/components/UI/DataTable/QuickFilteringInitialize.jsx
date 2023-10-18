@@ -7,10 +7,17 @@ export default function QuickFilteringInitialize(props) {
   // const DataGrid = dynamic(() => import('@mui/x-data-grid').then((module) => module.DataGrid), { ssr: false });
   // const GridToolbar = dynamic(() => import('@mui/x-data-grid').then((module) => module.GridToolbar), { ssr: false });
   return (
-    <Box sx={{ height: 400, width: 1 }}>
+    <Box sx={{
+      height: 400, width: 1,
+      fontWeight: "bold",
+      '& .super-app-theme--header': {
+        fontWeight: "bold"
+      },
+    }}>
 
       <DataGrid
         className='rounded-lg bg-white shadow-md'
+        sx={{ fontWeight: "bold" }}
         rows={props?.data}
         getRowId={(row) => row?.id ? row.id : row._id}
         columns={props?.columns}

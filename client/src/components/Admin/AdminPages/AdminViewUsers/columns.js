@@ -1,5 +1,14 @@
 export const columns = [
-    { field: 'username', headerName: 'Username', minWidth: 150 },
-    { field: 'email', headerName: 'Email', minWidth: 150 },
-    { field: 'isAdmin', headerName: 'Admin', minWidth: 50, flex: 1 }
+    {
+        headerClassName: 'super-app-theme--header',
+        field: 'username', headerName: 'Username', minWidth: 150
+    },
+    {
+        headerClassName: 'super-app-theme--header',
+        field: 'email', headerName: 'Email', minWidth: 150
+    },
+    {
+        headerClassName: 'super-app-theme--header',
+        field: 'isAdmin', headerName: 'Admin', minWidth: 50, flex: 1
+    }
 ];

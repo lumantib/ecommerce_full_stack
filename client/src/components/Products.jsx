@@ -2,17 +2,24 @@ import { ShoppingCartOutlined } from '@mui/icons-material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useSearchParams, useNavigate } from 'react-router-dom';
 import { addProduct, removeProduct } from '../redux/cartReducer';
 import publicRequest from '../requests/requestMethos';
-import bluejeans from "./bluejeans.jpg"
-import { useSearchParams } from 'react-router-dom';
+
 const ProductListPage = () => {
 
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
+
+    const navigate = useNavigate();
     console.log(cart.products)
+
     const handleAddToCart = (item) => {
-        dispatch(addProduct({ products: item }))
+        const user = localStorage.getItem("username");
+        console.log('user', user)
+        user
+            ? dispatch(addProduct({ products: item }))
+            : navigate("/login");
     }
     const handleRemoveFromCart = (item) => {
         dispatch(removeProduct({ id: item.id }))

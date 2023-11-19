@@ -44,7 +44,7 @@ const Navbar = () => {
             <Wrapper>
                 <Left>
                     <Link to="">
-                        <Logo>Affordable Thrift Store</Logo>
+                        <Logo>UNX Fashion Store</Logo>
                     </Link>
                 </Left>
                 <Center>

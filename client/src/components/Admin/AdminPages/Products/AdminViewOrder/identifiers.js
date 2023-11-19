@@ -11,8 +11,8 @@ const identifiers = {
     //     modal_mode: "add"
     // },
     // delete: {
-    //     title: "Delete Remove",
-    //     button_label: "Delete Removes",
+    //     title: "Delete",
+    //     button_label: "Deletes",
     //     modal_mode: "delete"
     // },
     // deleteSelected: {

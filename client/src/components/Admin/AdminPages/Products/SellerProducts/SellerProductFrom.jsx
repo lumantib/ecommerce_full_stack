@@ -1,6 +1,6 @@
 
 import SendIcon from '@mui/icons-material/Send';
-import { TextField } from '@mui/material';
+import { FormHelperText, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -176,6 +176,7 @@ const SellerProductFrom = (props) => {
                 <Controller
                     name="categories"
                     control={control}
+                    rules={{ required: 'Categories are required' }}
                     type="text"
                     size="small"
                     defaultValue={[]}
@@ -189,6 +190,7 @@ const SellerProductFrom = (props) => {
                                 label="Categories"
                                 multiple
                                 defaultValue={[]}
+                                errors={errors.categories}
                             >
                                 {
                                     types?.filter(type => type.type == "Category")?.map(type => {
@@ -200,6 +202,9 @@ const SellerProductFrom = (props) => {
                                     })
                                 }
                             </Select>
+                            {errors.categories && (
+                                <FormHelperText error>{errors.categories.message}</FormHelperText>
+                            )}
                         </FormControl>
                     )}
                 />
@@ -207,6 +212,7 @@ const SellerProductFrom = (props) => {
                 <Controller
                     name="seasons"
                     control={control}
+                    rules={{ required: 'Seasons are required' }}
                     type="text"
                     size="small"
                     defaultValue={[]}
@@ -220,9 +226,10 @@ const SellerProductFrom = (props) => {
                                 label="Seasons"
                                 multiple
                                 defaultValue={[]}
+                                errors={errors.seasons}
                             >
                                 {
-                                    types?.filter(type => type.type == "Season")?.map(type => {
+                                    types?.filter(type => type.type == "Seasons")?.map(type => {
                                         return (
                                             <MenuItem key={type._id} value={type.name}>
                                                 {type.name}
@@ -231,6 +238,9 @@ const SellerProductFrom = (props) => {
                                     })
                                 }
                             </Select>
+                            {errors.seasons && (
+                                <FormHelperText error>{errors.seasons.message}</FormHelperText>
+                            )}
                         </FormControl>
                     )}
                 />

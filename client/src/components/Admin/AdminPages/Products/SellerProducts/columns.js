@@ -3,7 +3,7 @@ export const columns = [
     // field: '_id', headerName: 'ID', minWidth: 250 },
     {
         headerClassName: 'super-app-theme--header',
-        field: 'photo', headerName: 'IMG', width: 30, renderCell: (params) => params.value ? <img src={`http://localhost:5000/photo/${params.value}`} className="rounded-full w-8 h-8" /> : <></>,
+        field: 'photo', headerName: 'IMG', width: 30, renderCell: (params) => params.value ? <img src={`http://localhost:5000/photo/${params.value}`} className="rounded-full max-w-[32px] max-h-[32px]  min-w-[32px] min-h-[32px] object-cover" /> : <></>,
     },
     {
         headerClassName: 'super-app-theme--header',

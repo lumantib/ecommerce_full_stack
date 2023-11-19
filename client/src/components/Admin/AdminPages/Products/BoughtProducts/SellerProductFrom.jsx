@@ -22,6 +22,43 @@ const SellerProductFrom = (props) => {
         !(watch("status") === "done") && unregister('photo')
     }, [watch("status")]);
 
+    
+    const [photo, setPhoto] = useState(null);
+
+    const validateImage = (file) => {
+        const allowedExtensions = ['jpg', 'jpeg', 'png'];
+        const maxSizeInBytes = 1024 * 1024; // 1MB
+
+        if (!allowedExtensions.includes(file.name.split('.').pop().toLowerCase())) {
+            return 'Invalid file format. Only JPG, JPEG, and PNG files are allowed.';
+        }
+
+        if (file.size > maxSizeInBytes) {
+            return 'File size exceeds the maximum limit of 1MB.';
+        }
+
+        return null; // File is valid
+    };
+
+
+    const handleChangePhoto = (newFile) => {
+        if (newFile === null) {
+            // File has been removed, clear the optional_photo
+            setPhoto(null);
+        } else {
+            const validationError = validateImage(newFile);
+
+            if (validationError) {
+                // Handle the validation error (e.g., display a browser alert)
+                window.alert(validationError);
+            } else {
+                // File is valid, set it as optional_photo
+                setPhoto(newFile);
+            }
+        }
+    };
+
+
     // submit data
     const onSubmit = data => {
         console.log("submit data", data)

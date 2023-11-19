@@ -55,16 +55,16 @@ const ProductListPage = () => {
                                 {product.offer ? (
                                     <div className="absolute top-0 right-0 p-2 bg-blue-500 rounded-bl-lg">
                                         <span className="text-white font-semibold line-through mr-1">
-                                            ${product.price.toFixed(2)}
+                                            Rs {product.price.toFixed(2)}
                                         </span>
                                         <span className="text-white font-semibold">
-                                            ${(product.price - (product.price * parseFloat(product.offer) / 100)).toFixed(2)}
+                                            Rs {(product.price - (product.price * parseFloat(product.offer) / 100)).toFixed(2)}
                                         </span>
                                     </div>
                                 ) : (
                                     <div className="absolute top-0 right-0 p-2 bg-blue-500 rounded-bl-lg">
                                         <span className="text-white font-semibold">
-                                            ${product.price.toFixed(2)}
+                                            Rs {product.price.toFixed(2)}
                                         </span>
                                     </div>
                                 )}

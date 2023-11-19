@@ -2,7 +2,7 @@ const identifiers = {
     title: "Seasons List",
     edit: {
         title: "Update Category",
-        button_label: "Update Category",
+        button_label: "Update",
         modal_mode: "edit"
     },
     add: {
@@ -11,8 +11,8 @@ const identifiers = {
         modal_mode: "add"
     },
     delete: {
-        title: "Delete Remove",
-        button_label: "Delete Removes",
+        title: "Delete",
+        button_label: "Delete",
         modal_mode: "delete"
     },
     // deleteSelected: {

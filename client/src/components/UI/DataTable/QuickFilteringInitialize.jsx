@@ -17,7 +17,7 @@ export default function QuickFilteringInitialize(props) {
 
       <DataGrid
         className='rounded-lg bg-white shadow-md'
-        sx={{ fontWeight: "bold" }}
+        // sx={{ fontWeight: "bold" }}
         rows={props?.data}
         getRowId={(row) => row?.id ? row.id : row._id}
         columns={props?.columns}

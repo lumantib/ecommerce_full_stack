@@ -63,6 +63,7 @@ const SellerProductListPage = () => {
                 handleOpen={handleOpen}
                 row={row}
                 setSelectedRowItemId={setSelectedRowItemId}
+                editDisabled={row?.isVerified}
             />
     }
 

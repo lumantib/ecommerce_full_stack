@@ -1,30 +1,29 @@
 
 import SendIcon from '@mui/icons-material/Send';
-import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import FormLabel from '@mui/material/FormLabel';
-import * as React from 'react';
-import { useForm, Controller } from "react-hook-form";
-import publicRequest from '../../../../../requests/requestMethos';
-import ConfirmationButtonsContainer from '../../../../UI/MUI/Modals/ConfirmationButtons/ConfirmationButtonsContainer';
 import {
     FormControl,
     InputLabel,
     MenuItem,
-    Select
-} from "@mui/material";
+    Select, TextField
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import * as React from 'react';
+import { Controller, useForm } from "react-hook-form";
+import publicRequest from '../../../../../requests/requestMethos';
+import ConfirmationButtonsContainer from '../../../../UI/MUI/Modals/ConfirmationButtons/ConfirmationButtonsContainer';
+
+import { MuiFileInput } from 'mui-file-input';
+// import * as React from 'react';
+import { useState, useEffect } from 'react';
 
 const SellerPedingVerifiedProductFrom = (props) => {
-    React.useEffect(() => {
+    useEffect(() => {
         fetchTypes()
     }, []);
 
     // Api Calls
-    const [types, setTypes] = React.useState([]);
+    const [types, setTypes] = useState([]);
     const fetchTypes = () => {
         publicRequest.get('/type')
             .then(res => {
@@ -44,28 +43,118 @@ const SellerPedingVerifiedProductFrom = (props) => {
     // submit data
     const onSubmit = data => {
         console.log("submit data", data)
+        const formData = new FormData();
+        formData.append('photo', photo)
+        formData.append('name', data.name)
+        formData.append('price', data.price)
+        formData.append('description', data.description)
+        formData.append('categories', data.categories)
+        formData.append('seasons', data.seasons)
         props.setIsLoading(true)
-        publicRequest.post('/products', data)
-            .then(res => {
-                console.log(res)
-                props.setResponseMessage("Data has been added")
-                props.fetchData()
-                props.handleClose()
-            })
-            .catch(err => {
-                props.setIsLoading(false)
-                props.setOpenSnackbar(true);
-                props.setResponseMessage("err?.response?.data?.message")
-            })
-            .finally(() => {
-                props.setIsLoading(false)
-                props.setOpenSnackbar(true);
-            });
+        // publicRequest.patch('/products', data)
+        //     .then(res => {
+        //         console.log(res)
+        //         props.setResponseMessage("Data has been added")
+        //         props.fetchData()
+        //         props.handleClose()
+        //     })
+        //     .catch(err => {
+        //         console.log("luu", err)
+        //         props.setIsLoading(false)
+        //         props.setOpenSnackbar(true);
+        //         props.setResponseMessage(err?.response?.data?.error)
+        //     })
+        //     .finally(() => {
+        //         props.setIsLoading(false)
+        //         props.setOpenSnackbar(true);
+        //     });
+
+
+        props?.selectedData
+            ? publicRequest.patch(`/products/seller/${props?.selectedData?._id}`, formData)
+                .then(res => {
+                    console.log(res)
+                    props.setResponseMessage("Data has been updated")
+                    props.fetchData()
+                    props.handleClose()
+                })
+                .catch(err => {
+                    props.setIsLoading(false)
+                    props.setOpenSnackbar(true);
+                    console.error('err?.response: ', err?.response);
+                    props.setResponseMessage(err?.response?.data?.message)
+                })
+                .finally(() => {
+                    props.setIsLoading(false)
+                    props.setOpenSnackbar(true);
+                })
+            : publicRequest.post('/products', formData)
+                .then(res => {
+                    console.log(res)
+                    props.setResponseMessage("Data has been added")
+                    props.fetchData()
+                    props.handleClose()
+                })
+                .catch(err => {
+                    props.setIsLoading(false)
+                    props.setOpenSnackbar(true);
+                    console.error('err?.response: ', err?.response);
+                    props.setResponseMessage(err?.response?.data?.errors)
+                })
+                .finally(() => {
+                    props.setIsLoading(false)
+                    props.setOpenSnackbar(true);
+                })
+
     }
+
+    const [photo, setPhoto] = useState(null);
+
+    const validateImage = (file) => {
+        const allowedExtensions = ['jpg', 'jpeg', 'png'];
+        const maxSizeInBytes = 1024 * 1024; // 1MB
+
+        if (!allowedExtensions.includes(file.name.split('.').pop().toLowerCase())) {
+            return 'Invalid file format. Only JPG, JPEG, and PNG files are allowed.';
+        }
+
+        if (file.size > maxSizeInBytes) {
+            return 'File size exceeds the maximum limit of 1MB.';
+        }
+
+        return null; // File is valid
+    };
+
+
+    const handleChangePhoto = (newFile) => {
+        if (newFile === null) {
+            // File has been removed, clear the optional_photo
+            setPhoto(null);
+        } else {
+            const validationError = validateImage(newFile);
+
+            if (validationError) {
+                // Handle the validation error (e.g., display a browser alert)
+                window.alert(validationError);
+            } else {
+                // File is valid, set it as optional_photo
+                setPhoto(newFile);
+            }
+        }
+    };
 
     return (
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex flex-col gap-4 p-4 h-60 overflow-auto'>
+
+                <MuiFileInput
+                    value={photo}
+                    onChange={handleChangePhoto}
+                    size="small"
+                    placeholder={props?.selectedData?.photo ? "Update Image" : "Product Image"}
+                    accept=".jpg, .jpeg, .png" // Specify allowed file extensions
+                    maxSize={1024 * 1024} // 1MB (Specify maximum file size in bytes)
+                />
                 <TextField
                     label="Product Name"
                     id="outlined-size-small"
@@ -159,7 +248,7 @@ const SellerPedingVerifiedProductFrom = (props) => {
                     className='w-full sm:w-auto bg-primary'
                     type="submit"
                 >
-                    Send Request
+                    Update
                 </Button>
             </ConfirmationButtonsContainer>
         </form>

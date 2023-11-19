@@ -24,8 +24,11 @@ const CartPage = () => {
     const product_ids = cart.products.map((product) => product._id).join();
     const [alreadyBought, setAlreadyBought] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    // Submit data
     const handleSubmit = async () => {
         setIsLoading(true);
+        // Show Popup
         MySwal.fire({
             title: <p>Your order is being placed</p>,
             didOpen: () => {
@@ -33,10 +36,13 @@ const CartPage = () => {
             },
         });
         try {
+            // Call Api
             const response = await publicRequest.post('orders', {
                 products: cart.products.map((product) => product._id),
             });
             Swal.close();
+
+            // Make cart product 0 after bought(using redux)
             dispatch(resetProduct());
             MySwal.fire(<p>Order has been placed</p>, <p className='font-bold'>Your item(s) will be delivered in 2-3 days.</p>).then((result) => {
                 if (result.isConfirmed) {
@@ -54,7 +60,7 @@ const CartPage = () => {
     };
 
     return (
-        <div className="container mx-auto py-6">
+        <div className="!font-bold container mx-auto py-6">
             <h1 className="text-2xl font-bold mb-4">Cart</h1>
             {cart.products.length === 0 && (
                 <div className="bg-white p-4 shadow sm:rounded-lg text-center">
@@ -70,7 +76,7 @@ const CartPage = () => {
                             {cart.products.map((item) => (
                                 <div
                                     key={item.id}
-                                    className={`flex items-center px-4 py-3 ${alreadyBought.includes(item._id) ? 'bg-gray-200' : ''
+                                    className={` !font-bold flex items-center px-4 py-3 ${alreadyBought.includes(item._id) ? 'bg-gray-200' : ''
                                         }`}
                                 >
                                     <div className="w-16 h-16 flex-shrink-0">
@@ -81,7 +87,7 @@ const CartPage = () => {
                                         />
                                     </div>
                                     <div className="flex-1 ml-4">
-                                        <h3 className="text-lg font-medium text-gray-900">
+                                        <h3 className="text-lg  text-gray-900">
                                             {item.name}
                                         </h3>
                                         <p className="text-gray-500">Rs. {item.price}</p>
@@ -103,7 +109,7 @@ const CartPage = () => {
                             ))}
                         </div>
                         <div className="bg-gray-100 px-4 py-3 flex justify-between items-center">
-                            <p className="text-gray-600 font-medium">
+                            <p className="text-gray-600 ">
                                 Total: Rs {calculateTotal()}
                             </p>
                             <p className="text-gray-900 font-semibold">

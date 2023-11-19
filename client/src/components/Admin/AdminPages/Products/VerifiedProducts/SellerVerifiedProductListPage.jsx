@@ -108,7 +108,7 @@ const SellerVerifiedProductListPage = () => {
                 selectedRows={selectedRows}
                 handleOpen={handleOpen}
                 data={data}
-                columns={[...columns, optionButton]}
+                columns={[...columns]}
                 statusFilter={statusFilter}
             />
             <SimpleSnackbar message={responseMessage} open={openSnackbar} setOpen={setOpenSnackbar} />

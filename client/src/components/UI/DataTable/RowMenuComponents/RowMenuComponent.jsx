@@ -18,7 +18,7 @@ const RowMenuComponent = (props) => {
   };
   const openPopover = Boolean(anchorEl);
   const id = openPopover ? 'simple-popover' : undefined;
-
+  console.log("editDisabled", props?.editDisabled)
   return (
     <div>
       <IconButton aria-label="delete" aria-describedby={id} variant="contained" onClick={handlePopOverClick} >
@@ -30,6 +30,7 @@ const RowMenuComponent = (props) => {
             <Button
               size="small"
               aria-label="edit"
+              disabled={props?.editDisabled}
               onClick={(e) => {
                 handlePopOverClose(e)
                 props.setSelectedRowItemId(props.row._id)

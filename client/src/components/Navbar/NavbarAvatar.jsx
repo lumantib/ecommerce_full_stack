@@ -20,7 +20,7 @@ const LogoutPopover = () => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'logout-popover' : undefined;
-
+    const isAdmin = localStorage.getItem("isAdmin")
     return (
         <div>
             <Avatar sx={{ width: 32, height: 32, cursor: "pointer" }} onClick={handleClick}>{localStorage.getItem('username')?.[0]}</Avatar>
@@ -46,6 +46,15 @@ const LogoutPopover = () => {
                 }}
             >
                 <List component="nav">
+                    {
+                        isAdmin === "true"
+                            ?
+                            <ListItem button component={Link} to="/dashboard/products/sell">
+                                <ListItemText primary="Sell Products" sx={{ color: '#333' }} />
+                            </ListItem>
+                            :
+                            <></>
+                    }
                     <ListItem button component={Link} to="/login" onClick={() => localStorage.clear()}>
                         <ListItemText primary="Logout" sx={{ color: '#333' }} />
                     </ListItem>
